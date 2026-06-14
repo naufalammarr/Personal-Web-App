@@ -1,0 +1,513 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------ */
+/*  Apple High-Contrast Minimalist Design System                       */
+/*  True monochrome — no accent colours, no gradients.                 */
+/*                                                                     */
+/*  Surfaces alternate "museum gallery" style across four fixed tones: */
+/*    White (#FFFFFF) · Parchment (#F5F5F7) · Graphite (#1D1D1F) ·     */
+/*    Black (#000000).                                                 */
+/*                                                                     */
+/*  Text/border/button colours are driven by *flippable* tokens that   */
+/*  a surface context (.surface-* / .ctx-*) overrides — so one class    */
+/*  on a section inverts every descendant for legibility.              */
+/* ------------------------------------------------------------------ */
+@theme {
+  /* Inter, weighted hard for the Apple display rhythm (extrabold heads,
+     medium body). */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  /* High-contrast serif for editorial display moments (hero name, headlines). */
+  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+
+  /* Fixed monochrome palette — the only four surface tones. */
+  --color-canvas: #ffffff; /* page background                          */
+  --color-white: #ffffff;
+  --color-parchment: #f5f5f7;
+  --color-graphite: #1d1d1f;
+  --color-black: #000000;
+
+  /* Flippable tokens — defaults describe a LIGHT surface.
+     Overridden inside .ctx-dark / .surface-graphite / .surface-black.  */
+  --color-ink: #000000; /* primary text + strong borders             */
+  --color-on-ink: #ffffff; /* text on an ink-filled element             */
+  --color-ink-hover: #1d1d1f; /* primary-button hover                      */
+  --color-soft: #1d1d1f; /* body copy                                 */
+  --color-muted: #86868b; /* secondary / caption (same on both tones)  */
+  --color-line: #d2d2d7; /* hairline rule / 1px borders               */
+  --color-card: #ffffff; /* raised card surface                       */
+  --color-card-hover: #f5f5f7; /* card hover wash                           */
+  --color-field: #f5f5f7; /* form input fill                           */
+}
+
+/* ------------------------------------------------------------------ */
+/*  Surface contexts                                                   */
+/*  .ctx-*    flip the tokens only (no background — for overlays/nav).  */
+/*  .surface-* flip the tokens AND paint the background + base colour.  */
+/* ------------------------------------------------------------------ */
+.ctx-light,
+.surface-white,
+.surface-parchment {
+  --color-ink: #000000;
+  --color-on-ink: #ffffff;
+  --color-ink-hover: #1d1d1f;
+  --color-soft: #1d1d1f;
+  --color-muted: #86868b;
+  --color-line: #d2d2d7;
+  --color-card: #ffffff;
+  --color-card-hover: #f5f5f7;
+  --color-field: #f5f5f7;
+}
+
+.ctx-dark,
+.surface-graphite,
+.surface-black {
+  --color-ink: #ffffff;
+  --color-on-ink: #000000;
+  --color-ink-hover: #f5f5f7;
+  --color-soft: #f5f5f7;
+  --color-muted: #86868b;
+  --color-line: #3a3a3f;
+  --color-card: #1d1d1f;
+  --color-card-hover: #2a2a2d;
+  --color-field: #000000;
+}
+
+.surface-white,
+.surface-parchment,
+.surface-graphite,
+.surface-black {
+  color: var(--color-soft);
+}
+.surface-white {
+  background-color: var(--color-white);
+}
+.surface-parchment {
+  background-color: var(--color-parchment);
+}
+.surface-graphite {
+  background-color: var(--color-graphite);
+}
+.surface-black {
+  background-color: var(--color-black);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                              */
+/* ------------------------------------------------------------------ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 450;
+  background-color: var(--color-canvas);
+  color: var(--color-soft);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Apple display: sentence-case, extrabold, tightly tracked — the
+   weight contrast against medium body copy carries the minimalism. */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  color: var(--color-ink);
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: -0.022em;
+  line-height: 1.05;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Focus rings & active states                                       */
+/*  Black outline on light surfaces, white on dark — via --color-ink. */
+/* ------------------------------------------------------------------ */
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Signature utility classes                                         */
+/* ------------------------------------------------------------------ */
+
+/* All-caps eyebrow microtext above headlines / nav. */
+.eyebrow {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--color-muted);
+}
+
+/* Primary pill CTA — solid ink, inverted text. On a light surface that
+   reads as black-on-white; on a dark surface it auto-inverts to
+   white-on-black. Hovers to the softer ink tone (graphite / parchment). */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--color-ink);
+  border-radius: 9999px;
+  padding: 15px 28px;
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.btn-primary:hover {
+  background: var(--color-ink-hover);
+  border-color: var(--color-ink-hover);
+}
+
+/* Secondary pill — outline only (Apple "Buy" style). Transparent fill,
+   ink border + text; fills with ink on hover. */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--color-ink);
+  border-radius: 9999px;
+  padding: 15px 28px;
+  background: transparent;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.btn-secondary:hover {
+  background: var(--color-ink);
+  color: var(--color-on-ink);
+}
+
+/* Animated underline — a hairline that wipes in from the left on hover,
+   matching the current text colour. */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .link-underline::after {
+    transition: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Chrome                                                            */
+/* ------------------------------------------------------------------ */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-parchment);
+}
+::-webkit-scrollbar-thumb {
+  background: #c7c7cc;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #aeaeb2;
+}
+
+::selection {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Custom cursor                                                     */
+/*  Hidden on touch devices. The layer uses mix-blend-mode: difference */
+/*  so the ring/dot render pure black on light and pure white on dark   */
+/*  automatically — true monochrome on any surface.                    */
+/* ------------------------------------------------------------------ */
+@media (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+}
+
+.cursor-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+
+.cursor-ring {
+  display: block;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+}
+
+.cursor-dot {
+  display: block;
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: #ffffff;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Focus glow — a monochrome light that orbits an input border while   */
+/*  it is focused. Uses --color-ink so it is black on light surfaces    */
+/*  and white on dark. Animation is paused until focus, so it costs     */
+/*  nothing at rest.                                                    */
+/* ------------------------------------------------------------------ */
+@property --glow-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.glow-field {
+  display: block;
+  position: relative;
+}
+
+.glow-field::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--glow-angle),
+    transparent 55%,
+    var(--color-ink) 78%,
+    var(--color-ink) 86%,
+    transparent 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  animation: glow-orbit 2.4s linear infinite;
+  animation-play-state: paused;
+  pointer-events: none;
+}
+
+.glow-field:focus-within::before {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+@keyframes glow-orbit {
+  to {
+    --glow-angle: 360deg;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Marquee — a seamless looping ticker (two identical halves slide by  */
+/*  -50%). Pauses on hover; disabled entirely under reduced-motion.     */
+/* ------------------------------------------------------------------ */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee-track {
+  display: inline-flex;
+  width: max-content;
+  flex-wrap: nowrap;
+  animation: marquee 26s linear infinite;
+}
+
+.marquee-seq {
+  display: inline-flex;
+  flex-wrap: nowrap;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Reduced motion: stop the slide, drop the duplicate sequence, and let the
+   single row wrap normally. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+  }
+  .marquee-seq {
+    flex-wrap: wrap;
+  }
+  .marquee-seq + .marquee-seq {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Film grain — a fixed fractal-noise layer that blends over the whole */
+/*  page for a cinematic, premium texture. Oversized + jittered so the   */
+/*  flicker never reveals an edge. Sits above content, below the cursor, */
+/*  curtain and preloader.                                              */
+/* ------------------------------------------------------------------ */
+.grain {
+  position: fixed;
+  inset: -60%;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  animation: grain 0.6s steps(3) infinite;
+}
+
+@keyframes grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-3%, 2%);
+  }
+  50% {
+    transform: translate(2%, -3%);
+  }
+  75% {
+    transform: translate(-2%, -2%);
+  }
+  100% {
+    transform: translate(2%, 3%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Site invert — flips the entire monochrome UI black <-> white in one */
+/*  filter. Pure grayscale means invert() is an exact tone swap.        */
+/* ------------------------------------------------------------------ */
+.invert-theme {
+  filter: invert(1);
+}
+
+/* Media handling under invert. The whole site is inverted with a single
+   filter, which would turn photos into negatives — so re-invert media to keep
+   it true. `.media-mono` keeps images grayscale (on-brand) in BOTH modes by
+   re-inverting on top of grayscale; plain <img>/<video> are simply neutralised
+   back to their natural colour. */
+.media-mono {
+  filter: grayscale(1) contrast(1.02);
+}
+.invert-theme img,
+.invert-theme video {
+  filter: invert(1);
+}
+.invert-theme .media-mono {
+  filter: grayscale(1) contrast(1.02) invert(1);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Theme switch — circular reveal via the View Transitions API.       */
+/*  The new (inverted) snapshot is clipped to a circle that grows from  */
+/*  the toggle button to cover the screen; the old snapshot stays put    */
+/*  beneath it. Origin + radius come from CSS vars set in App on click. */
+/* ------------------------------------------------------------------ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-circle 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes theme-circle {
+  from {
+    clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--vt-r, 150%) at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+}
+
+/* Editorial serif display — high-contrast Fraunces for hero / headline
+   moments. Class form (and unlayered) so it overrides the base h1–h4 weight
+   and family reliably. */
+.display-serif {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
