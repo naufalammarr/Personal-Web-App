@@ -8,10 +8,8 @@ import { PageScrollContext } from './PageScrollContext'
  * --------------
  * The outermost wrapper of every routed page:
  *
- *  1. Animates children on mount/unmount with a restrained scale + cross-fade.
- *     The heavy lifting of the route change is the <Curtain> wipe in App.jsx;
- *     this just lets the incoming page settle softly as the curtain reveals it
- *     (no blur, so the two effects don't compound). Works with
+ *  1. Animates children on mount/unmount with a restrained scale + cross-fade
+ *     (no blur) so the incoming page settles softly. Works with
  *     <AnimatePresence mode="wait"> in App.jsx (keyed by pathname) so one page
  *     fully resolves before the next begins.
  *  2. Is a precise full-page snap anchor — exactly one viewport tall
