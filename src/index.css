@@ -510,9 +510,58 @@ h4 {
   }
 }
 
+/* ------------------------------------------------------------------ */
+/*  Light / dark — flips the entire monochrome UI black <-> white with   */
+/*  one filter on <html>. Pure grayscale makes invert() an exact tone    */
+/*  swap. Applied to the root element, so it does NOT break position:     */
+/*  fixed or backdrop-filter on descendants.                             */
+/* ------------------------------------------------------------------ */
+.invert-theme {
+  filter: invert(1);
+}
+
 /* Monochrome media — keeps project/media images on-brand (grayscale). */
 .media-mono {
   filter: grayscale(1) contrast(1.02);
+}
+
+/* Media under invert: the whole page is inverted, which would turn photos
+   into negatives — so re-invert media to keep it true. `.media-mono` stays
+   grayscale in both modes; plain <img>/<video> are neutralised back. */
+.invert-theme img,
+.invert-theme video {
+  filter: invert(1);
+}
+.invert-theme .media-mono {
+  filter: grayscale(1) contrast(1.02) invert(1);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Theme switch — circular reveal via the View Transitions API. The new */
+/*  (inverted) snapshot is clipped to a circle that grows from the toggle */
+/*  button to cover the screen; the old snapshot stays beneath. Origin +  */
+/*  radius come from --vt-* vars set in App on click.                    */
+/* ------------------------------------------------------------------ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-circle 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes theme-circle {
+  from {
+    clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--vt-r, 150%) at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
 }
 
 /* Editorial serif display — high-contrast Fraunces for hero / headline

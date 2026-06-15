@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/layout/Navbar'
 import CustomCursor from './components/shared/CustomCursor'
 import SoundToggle from './components/shared/SoundToggle'
+import ThemeToggle from './components/shared/ThemeToggle'
 import TorchBackground from './components/shared/TorchBackground'
 import Preloader from './components/shared/Preloader'
 import Home from './pages/Home'
@@ -49,6 +50,46 @@ export default function App() {
     setLoading(false)
   }
 
+  // Light/dark — the whole grayscale UI is flipped B↔W with a single
+  // `filter: invert(1)` on <html> (.invert-theme). Initial value comes from the
+  // class an inline script in index.html sets pre-paint (so there's no flash);
+  // we mirror it here for the toggle's aria state, persist the choice to
+  // localStorage, and reveal the swap with a circular View-Transition wiping out
+  // from the button. Reduced-motion / unsupported browsers flip instantly.
+  const [inverted, setInverted] = useState(
+    () => typeof document !== 'undefined' &&
+      document.documentElement.classList.contains('invert-theme'),
+  )
+
+  const toggleInvert = (x, y) => {
+    const root = document.documentElement
+    const radius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    )
+    root.style.setProperty('--vt-x', `${x}px`)
+    root.style.setProperty('--vt-y', `${y}px`)
+    root.style.setProperty('--vt-r', `${radius}px`)
+
+    const apply = () => {
+      const next = !root.classList.contains('invert-theme')
+      root.classList.toggle('invert-theme', next)
+      try {
+        localStorage.setItem('invert-theme', next ? '1' : '0')
+      } catch {
+        /* ignore */
+      }
+      setInverted(next)
+    }
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (document.startViewTransition && !reduced) {
+      document.startViewTransition(apply)
+    } else {
+      apply()
+    }
+  }
+
   return (
     <div className="bg-canvas">
       <AnimatePresence>
@@ -58,6 +99,7 @@ export default function App() {
       <TorchBackground />
       <CustomCursor />
       <SoundToggle />
+      <ThemeToggle inverted={inverted} onToggle={toggleInvert} />
       <Navbar />
 
       <main className="relative z-10 h-screen overflow-y-auto scroll-smooth snap-y snap-mandatory">

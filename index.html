@@ -2,6 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Apply the saved light/dark (invert) choice before paint, no flash. -->
+    <script>
+      try {
+        if (localStorage.getItem('invert-theme') === '1')
+          document.documentElement.classList.add('invert-theme')
+      } catch (e) {}
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
