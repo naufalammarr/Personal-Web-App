@@ -536,6 +536,24 @@ h4 {
   filter: grayscale(1) contrast(1.02) invert(1);
 }
 
+/* Color-on-hover for a `.media-mono` image — fades from grayscale to full
+   colour on hover. The inverted-theme variant keeps an extra invert(1) so it
+   cancels the root filter and shows TRUE colour (not a negative) in dark mode. */
+.media-hover-color {
+  transition: filter 0.5s ease;
+}
+.media-hover-color:hover {
+  filter: grayscale(0) contrast(1.02);
+}
+.invert-theme .media-hover-color:hover {
+  filter: grayscale(0) contrast(1.02) invert(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .media-hover-color {
+    transition: none;
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /*  Theme switch — circular reveal via the View Transitions API. The new */
 /*  (inverted) snapshot is clipped to a circle that grows from the toggle */

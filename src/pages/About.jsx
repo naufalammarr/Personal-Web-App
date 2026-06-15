@@ -112,7 +112,7 @@ export default function About() {
             <img
               src={foto}
               alt="Naufal Ammar Zaidan"
-              className="media-mono h-80 w-64 rounded-[1.15rem] object-cover object-top sm:h-96 sm:w-72"
+              className="media-mono media-hover-color h-80 w-64 rounded-[1.15rem] object-cover object-top sm:h-96 sm:w-72"
             />
           </motion.div>
         </div>
