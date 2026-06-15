@@ -27,14 +27,32 @@ import Services from './pages/Services'
  */
 export default function App() {
   const location = useLocation()
-  // First-load splash. Shown once on mount; <Preloader> drives the 000→100
-  // counter and calls onDone to drop this flag, playing its lift-away exit.
-  const [loading, setLoading] = useState(true)
+  // First-load splash, shown once per browser session. We persist a flag in
+  // sessionStorage so re-renders/route changes (and refreshes within the same
+  // tab session) skip it; opening a new tab/session shows it again. <Preloader>
+  // drives the 000→100 counter and calls onDone, which sets the flag and drops
+  // this state so its lift-away exit plays.
+  const [loading, setLoading] = useState(() => {
+    try {
+      return sessionStorage.getItem('preloaded') !== '1'
+    } catch {
+      return true
+    }
+  })
+
+  const dismissPreloader = () => {
+    try {
+      sessionStorage.setItem('preloaded', '1')
+    } catch {
+      /* sessionStorage unavailable (private mode) — just hide it */
+    }
+    setLoading(false)
+  }
 
   return (
     <div className="bg-canvas">
       <AnimatePresence>
-        {loading && <Preloader onDone={() => setLoading(false)} />}
+        {loading && <Preloader onDone={dismissPreloader} />}
       </AnimatePresence>
 
       <TorchBackground />
