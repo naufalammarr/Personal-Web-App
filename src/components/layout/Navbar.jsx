@@ -157,7 +157,7 @@ export default function Navbar() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="surface-black fixed inset-0 z-[60] flex h-screen w-screen flex-col items-center justify-center md:hidden"
+            className="ctx-dark fixed inset-0 z-[60] flex h-screen w-screen flex-col items-center justify-center bg-black/70 backdrop-blur-2xl md:hidden"
           >
             <motion.button
               variants={linkVariants}

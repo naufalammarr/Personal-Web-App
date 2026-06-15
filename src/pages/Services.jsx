@@ -121,14 +121,14 @@ export default function Services() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-60px' }}
-            className="grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
           >
             {services.map(({ icon: Icon, title, desc, points }) => (
               <motion.div
                 key={title}
                 variants={item}
                 whileHover={{ y: -6 }}
-                className="flex h-full flex-col bg-card p-8 transition-colors hover:bg-card-hover"
+                className="glass-card flex h-full flex-col p-8"
               >
                 <Icon size={24} strokeWidth={1.5} className="text-ink" />
                 <h3 className="mt-6 text-lg font-extrabold tracking-tight text-ink">

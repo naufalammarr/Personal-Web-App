@@ -116,7 +116,7 @@ export default function Projects() {
       {/* Gallery */}
       <section data-tone="light" className="surface-parchment px-6 py-16 sm:px-10" onMouseMove={onMove}>
         <div className="mx-auto max-w-6xl">
-          <motion.div layout className="grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3">
+          <motion.div layout className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <AnimatePresence mode="popLayout">
               {filtered.map((project) => {
                 const Icon = project.icon
@@ -132,7 +132,7 @@ export default function Projects() {
                     onMouseEnter={() => setHovered(project)}
                     onMouseLeave={() => setHovered(null)}
                     data-cursor="hover"
-                    className="group flex flex-col bg-card p-8 transition-colors hover:bg-card-hover"
+                    className="glass-card group flex flex-col overflow-hidden p-8"
                   >
                     {project.image && (
                       <div className="-mx-8 -mt-8 mb-6 h-40 overflow-hidden">

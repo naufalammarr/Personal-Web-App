@@ -200,7 +200,7 @@ export default function Home() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-80px' }}
-            className="grid grid-cols-2 gap-px bg-line lg:grid-cols-4"
+            className="grid grid-cols-2 gap-4 lg:grid-cols-4"
           >
             {kpis.map((kpi) => (
               <motion.div key={kpi.label} variants={item}>
@@ -277,7 +277,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="rounded-2xl bg-card p-6 sm:p-8"
+            className="glass-card p-6 sm:p-8"
           >
             {sent ? (
               <div className="relative flex h-full flex-col items-center justify-center py-10 text-center">

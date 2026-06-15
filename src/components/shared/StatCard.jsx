@@ -20,7 +20,7 @@ export default function StatCard({ icon: Icon, title, desc, tags = [], level }) 
     <motion.div
       whileHover={{ y: -6 }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-      className="flex h-full flex-col bg-card p-8 transition-colors hover:bg-card-hover"
+      className="glass-card flex h-full flex-col p-8"
     >
       <div className="mb-4 flex items-center gap-3">
         {Icon && <Icon size={20} strokeWidth={1.75} className="text-ink" />}

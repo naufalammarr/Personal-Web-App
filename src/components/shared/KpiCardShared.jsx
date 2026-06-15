@@ -20,7 +20,7 @@ export default function KpiCardShared({ icon: Icon, value, suffix = '', label })
     <motion.div
       whileHover={{ y: -6 }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-      className="bg-card p-8 transition-colors hover:bg-card-hover"
+      className="glass-card p-8"
     >
       {Icon && (
         <Icon size={18} strokeWidth={1.75} className="mb-5 text-muted" />

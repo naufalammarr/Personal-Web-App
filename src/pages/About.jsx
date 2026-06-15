@@ -3,6 +3,7 @@ import { Brain, Cpu, Layout, Mic, Server, Workflow } from 'lucide-react'
 import PageTransition from '../components/shared/PageTransition'
 import StatCard from '../components/shared/StatCard'
 import RevealText from '../components/shared/RevealText'
+import foto from '../assets/Foto.jpeg'
 
 /**
  * About
@@ -80,7 +81,7 @@ export default function About() {
     <PageTransition>
       {/* Intro */}
       <section data-tone="dark" className="surface-black border-b border-line px-6 pb-16 pt-36 sm:px-10">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-[1fr_auto]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -90,15 +91,29 @@ export default function About() {
             <RevealText
               as="h1"
               text="Engineer at heart, student by passion"
-              className="display-serif mt-6 max-w-3xl text-4xl text-ink sm:text-6xl"
+              className="display-serif mt-6 max-w-xl text-4xl text-ink sm:text-6xl"
             />
-            <p className="mt-8 max-w-2xl text-lg font-medium leading-relaxed text-muted">
+            <p className="mt-8 max-w-xl text-lg font-medium leading-relaxed text-muted">
               I&apos;m Naufal Ammar Zaidan — a fullstack developer and undergraduate
               student based in Bandung / Jakarta. I&apos;m currently finishing my
               final-year research (Tugas Akhir) while building real-world web
               applications. I care deeply about clean code, thoughtful architecture,
               and shipping products that feel fast and intentional.
             </p>
+          </motion.div>
+
+          {/* Portrait in a liquid-glass frame */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="glass mx-auto w-fit rounded-[1.6rem] p-2.5 lg:mx-0"
+          >
+            <img
+              src={foto}
+              alt="Naufal Ammar Zaidan"
+              className="media-mono h-80 w-64 rounded-[1.15rem] object-cover object-top sm:h-96 sm:w-72"
+            />
           </motion.div>
         </div>
       </section>
@@ -107,7 +122,7 @@ export default function About() {
       <section data-tone="light" className="surface-parchment border-b border-line px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-5xl">
           <p className="eyebrow mb-8">Education &amp; Journey</p>
-          <div className="grid gap-px bg-line sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             {education.map((edu, i) => (
               <motion.div
                 key={edu.title}
@@ -116,7 +131,7 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 whileHover={{ y: -6 }}
-                className="bg-card p-8"
+                className="glass-card p-8"
               >
                 <span className="eyebrow !text-[0.65rem]">{edu.period}</span>
                 <h3 className="mt-3 text-xl font-extrabold tracking-tight text-ink">
@@ -141,7 +156,7 @@ export default function About() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-60px' }}
-            className="grid gap-px bg-line md:grid-cols-3"
+            className="grid gap-4 md:grid-cols-3"
           >
             {skills.map((skill) => (
               <motion.div key={skill.title} variants={item}>
@@ -164,14 +179,14 @@ export default function About() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-60px' }}
-            className="grid gap-px bg-line md:grid-cols-3"
+            className="grid gap-4 md:grid-cols-3"
           >
             {interests.map(({ icon: Icon, title, desc }) => (
               <motion.div
                 key={title}
                 variants={item}
                 whileHover={{ y: -6 }}
-                className="bg-card p-8"
+                className="glass-card p-8"
               >
                 <Icon size={22} strokeWidth={1.5} className="mb-5 text-ink" />
                 <h3 className="text-lg font-extrabold tracking-tight text-ink">
