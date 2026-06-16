@@ -4,6 +4,11 @@ import PageTransition from '../components/shared/PageTransition'
 import StatCard from '../components/shared/StatCard'
 import RevealText from '../components/shared/RevealText'
 import foto from '../assets/Foto.jpeg'
+import certFundamentals from '../assets/AI Fundamentals.webp'
+import certBrainstorming from '../assets/AI for Brainstorming and Planning.webp'
+import certContent from '../assets/AI for Content Creation.webp'
+import certResearch from '../assets/AI for Research and Insights.webp'
+import certWriting from '../assets/AI for Writing and Communicating.webp'
 
 /**
  * About
@@ -65,6 +70,14 @@ const education = [
     title: 'Fullstack Web Development',
     place: 'Self-driven projects, internships & real-world systems',
   },
+]
+
+const certificates = [
+  { image: certFundamentals, title: 'AI Fundamentals' },
+  { image: certBrainstorming, title: 'AI for Brainstorming and Planning' },
+  { image: certResearch, title: 'AI for Research and Insights' },
+  { image: certContent, title: 'AI for Content Creation' },
+  { image: certWriting, title: 'AI for Writing and Communicating' },
 ]
 
 const container = {
@@ -194,6 +207,42 @@ export default function About() {
                 </h3>
                 <p className="mt-3 text-sm font-medium leading-relaxed text-muted">{desc}</p>
               </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Certifications */}
+      <section data-tone="light" className="surface-white px-6 py-16 sm:px-10">
+        <div className="mx-auto max-w-5xl">
+          <p className="eyebrow mb-2">Certifications</p>
+          <p className="mb-10 text-sm font-medium text-muted">
+            Google AI Essentials — credentials earned through Coursera.
+          </p>
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {certificates.map(({ image, title }) => (
+              <motion.figure
+                key={title}
+                variants={item}
+                whileHover={{ y: -6 }}
+                className="glass-card overflow-hidden p-2.5"
+              >
+                <img
+                  src={image}
+                  alt={`${title} certificate — Google AI Essentials`}
+                  loading="lazy"
+                  className="media-mono media-hover-color aspect-[4/3] w-full rounded-[0.9rem] object-cover"
+                />
+                <figcaption className="px-3 pb-2 pt-4 text-sm font-extrabold tracking-tight text-ink">
+                  {title}
+                </figcaption>
+              </motion.figure>
             ))}
           </motion.div>
         </div>
