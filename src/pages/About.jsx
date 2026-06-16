@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion'
-import { Brain, Cpu, Layout, Mic, Server, Workflow } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Brain, Cpu, Layout, Mic, Server, Workflow, X } from 'lucide-react'
 import PageTransition from '../components/shared/PageTransition'
 import StatCard from '../components/shared/StatCard'
 import RevealText from '../components/shared/RevealText'
@@ -90,6 +91,22 @@ const item = {
 }
 
 export default function About() {
+  const [activeCert, setActiveCert] = useState(null)
+
+  // Lock body scroll and allow Escape to close while the lightbox is open.
+  useEffect(() => {
+    if (!activeCert) return undefined
+    const onKey = (e) => {
+      if (e.key === 'Escape') setActiveCert(null)
+    }
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [activeCert])
+
   return (
     <PageTransition>
       {/* Intro */}
@@ -226,27 +243,77 @@ export default function About() {
             viewport={{ once: true, margin: '-60px' }}
             className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {certificates.map(({ image, title }) => (
+            {certificates.map((cert) => (
               <motion.figure
-                key={title}
+                key={cert.title}
                 variants={item}
                 whileHover={{ y: -6 }}
                 className="glass-card overflow-hidden p-2.5"
               >
-                <img
-                  src={image}
-                  alt={`${title} certificate — Google AI Essentials`}
-                  loading="lazy"
-                  className="media-mono media-hover-color aspect-[4/3] w-full rounded-[0.9rem] object-cover"
-                />
-                <figcaption className="px-3 pb-2 pt-4 text-sm font-extrabold tracking-tight text-ink">
-                  {title}
-                </figcaption>
+                <button
+                  type="button"
+                  onClick={() => setActiveCert(cert)}
+                  className="group block w-full cursor-pointer rounded-[0.9rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40"
+                  aria-label={`View ${cert.title} certificate`}
+                >
+                  <img
+                    src={cert.image}
+                    alt={`${cert.title} certificate — Google AI Essentials`}
+                    loading="lazy"
+                    className="media-mono media-hover-color aspect-[4/3] w-full rounded-[0.9rem] object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                  />
+                  <figcaption className="px-3 pb-2 pt-4 text-left text-sm font-extrabold tracking-tight text-ink">
+                    {cert.title}
+                  </figcaption>
+                </button>
               </motion.figure>
             ))}
           </motion.div>
         </div>
       </section>
+
+      {/* Certificate lightbox */}
+      <AnimatePresence>
+        {activeCert && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setActiveCert(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-6 backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${activeCert.title} certificate`}
+          >
+            <motion.figure
+              initial={{ opacity: 0, scale: 0.92, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 16 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="glass relative max-h-[90vh] w-full max-w-3xl overflow-hidden rounded-[1.4rem] p-2.5"
+            >
+              <button
+                type="button"
+                onClick={() => setActiveCert(null)}
+                aria-label="Close certificate"
+                className="glass absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full text-ink transition-transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40"
+              >
+                <X size={18} strokeWidth={2} />
+              </button>
+              <img
+                src={activeCert.image}
+                alt={`${activeCert.title} certificate — Google AI Essentials`}
+                className="max-h-[80vh] w-full rounded-[1.05rem] object-contain"
+              />
+              <figcaption className="px-3 pb-2 pt-4 text-center text-sm font-extrabold tracking-tight text-ink">
+                {activeCert.title}
+              </figcaption>
+            </motion.figure>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PageTransition>
   )
 }
