@@ -4,6 +4,7 @@ import { ArrowRight, Cloud, Code2, Database, Gauge, Layout, Server } from 'lucid
 import PageTransition from '../components/shared/PageTransition'
 import MagneticButton from '../components/shared/MagneticButton'
 import RevealText from '../components/shared/RevealText'
+import SurfaceFade from '../components/shared/SurfaceFade'
 
 /**
  * Services
@@ -93,7 +94,7 @@ const item = {
 export default function Services() {
   return (
     <PageTransition>
-      <section data-tone="dark" className="surface-black border-b border-line px-6 pb-12 pt-36 sm:px-10">
+      <section data-tone="dark" className="surface-black px-6 pb-12 pt-36 sm:px-10">
         <div className="mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -113,6 +114,8 @@ export default function Services() {
           </motion.div>
         </div>
       </section>
+
+      <SurfaceFade from="black" to="parchment" />
 
       <section data-tone="light" className="surface-parchment px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-6xl">
@@ -152,8 +155,10 @@ export default function Services() {
         </div>
       </section>
 
+      <SurfaceFade from="parchment" to="black" />
+
       {/* CTA */}
-      <section data-tone="dark" className="surface-black border-t border-line px-6 py-24 text-center sm:px-10">
+      <section data-tone="dark" className="surface-black px-6 py-24 text-center sm:px-10">
         <div className="mx-auto max-w-3xl">
           <RevealText
             as="h2"
@@ -174,6 +179,8 @@ export default function Services() {
           </div>
         </div>
       </section>
+
+      <SurfaceFade from="black" to="parchment" />
     </PageTransition>
   )
 }

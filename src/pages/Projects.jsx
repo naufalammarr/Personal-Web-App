@@ -4,6 +4,7 @@ import { ArrowUpRight, BarChart3, CalendarClock, Rocket } from 'lucide-react'
 import PageTransition from '../components/shared/PageTransition'
 import ScrambleText from '../components/shared/ScrambleText'
 import RevealText from '../components/shared/RevealText'
+import SurfaceFade from '../components/shared/SurfaceFade'
 
 /**
  * Projects
@@ -67,7 +68,7 @@ export default function Projects() {
 
   return (
     <PageTransition>
-      <section data-tone="dark" className="surface-black border-b border-line px-6 pb-12 pt-36 sm:px-10">
+      <section data-tone="dark" className="surface-black px-6 pb-12 pt-36 sm:px-10">
         <div className="mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -112,6 +113,8 @@ export default function Projects() {
           </motion.div>
         </div>
       </section>
+
+      <SurfaceFade from="black" to="parchment" />
 
       {/* Gallery */}
       <section data-tone="light" className="surface-parchment px-6 py-16 sm:px-10" onMouseMove={onMove}>

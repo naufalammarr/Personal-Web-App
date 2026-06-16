@@ -4,6 +4,7 @@ import { Brain, Cpu, Layout, Mic, Server, Workflow, X } from 'lucide-react'
 import PageTransition from '../components/shared/PageTransition'
 import StatCard from '../components/shared/StatCard'
 import RevealText from '../components/shared/RevealText'
+import SurfaceFade from '../components/shared/SurfaceFade'
 import foto from '../assets/Foto.jpeg'
 import certFundamentals from '../assets/AI Fundamentals.webp'
 import certBrainstorming from '../assets/AI for Brainstorming and Planning.webp'
@@ -110,7 +111,7 @@ export default function About() {
   return (
     <PageTransition>
       {/* Intro */}
-      <section data-tone="dark" className="surface-black border-b border-line px-6 pb-16 pt-36 sm:px-10">
+      <section data-tone="dark" className="surface-black px-6 pb-16 pt-36 sm:px-10">
         <div className="mx-auto grid max-w-5xl items-center gap-12 lg:grid-cols-[1fr_auto]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -148,8 +149,10 @@ export default function About() {
         </div>
       </section>
 
+      <SurfaceFade from="black" to="parchment" />
+
       {/* Education */}
-      <section data-tone="light" className="surface-parchment border-b border-line px-6 py-16 sm:px-10">
+      <section data-tone="light" className="surface-parchment px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-5xl">
           <p className="eyebrow mb-8">Education &amp; Journey</p>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -174,8 +177,10 @@ export default function About() {
         </div>
       </section>
 
+      <SurfaceFade from="parchment" to="white" />
+
       {/* Skills */}
-      <section data-tone="light" className="surface-white border-b border-line px-6 py-16 sm:px-10">
+      <section data-tone="light" className="surface-white px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-5xl">
           <p className="eyebrow mb-2">Technical Skills</p>
           <p className="mb-10 text-sm font-medium text-muted">
@@ -196,6 +201,8 @@ export default function About() {
           </motion.div>
         </div>
       </section>
+
+      <SurfaceFade from="white" to="parchment" />
 
       {/* Interests */}
       <section data-tone="light" className="surface-parchment px-6 py-16 sm:px-10">
@@ -228,6 +235,8 @@ export default function About() {
           </motion.div>
         </div>
       </section>
+
+      <SurfaceFade from="parchment" to="white" />
 
       {/* Certifications */}
       <section data-tone="light" className="surface-white px-6 py-16 sm:px-10">
@@ -271,6 +280,8 @@ export default function About() {
           </motion.div>
         </div>
       </section>
+
+      <SurfaceFade from="white" to="parchment" />
 
       {/* Certificate lightbox */}
       <AnimatePresence>

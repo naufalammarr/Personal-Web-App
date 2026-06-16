@@ -21,6 +21,7 @@ import KpiCardShared from '../components/shared/KpiCardShared'
 import RevealText from '../components/shared/RevealText'
 import MagneticButton from '../components/shared/MagneticButton'
 import ConfettiBurst from '../components/shared/ConfettiBurst'
+import SurfaceFade from '../components/shared/SurfaceFade'
 
 // EmailJS credentials, read from Vite env vars (see .env / .env.example).
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
@@ -191,8 +192,10 @@ export default function Home() {
         </motion.div>
       </section>
 
+      <SurfaceFade from="black" to="white" />
+
       {/* KPI band */}
-      <section data-tone="light" className="surface-white border-t border-line px-6 py-24 sm:px-10">
+      <section data-tone="light" className="surface-white px-6 py-24 sm:px-10">
         <div className="mx-auto max-w-6xl">
           <p className="eyebrow mb-10">By the numbers</p>
           <motion.div
@@ -211,8 +214,10 @@ export default function Home() {
         </div>
       </section>
 
+      <SurfaceFade from="white" to="graphite" />
+
       {/* Tech stack */}
-      <section data-tone="dark" className="surface-graphite border-t border-line px-6 py-24 sm:px-10">
+      <section data-tone="dark" className="surface-graphite px-6 py-24 sm:px-10">
         <div className="mx-auto max-w-6xl">
           <p className="eyebrow mb-8">Tooling</p>
           <div className="marquee -mx-6 sm:-mx-10">
@@ -234,8 +239,10 @@ export default function Home() {
         </div>
       </section>
 
+      <SurfaceFade from="graphite" to="parchment" />
+
       {/* Contact */}
-      <section id="contact" data-tone="light" className="surface-parchment scroll-mt-24 border-t border-line px-6 py-24 sm:px-10">
+      <section id="contact" data-tone="light" className="surface-parchment scroll-mt-24 px-6 py-24 sm:px-10">
         <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-2">
           {/* Left */}
           <motion.div
